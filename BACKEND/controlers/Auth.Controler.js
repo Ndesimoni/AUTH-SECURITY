@@ -1,7 +1,7 @@
 const postModel = require("../model/user_model.js");
 const bcrypt = require("bcryptjs");
 
-const postRequest = async (req, res) => {
+const postRequest = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   const hashPassword = bcrypt.hashSync(password, 10);
@@ -16,7 +16,7 @@ const postRequest = async (req, res) => {
 
     res.status(200).json({ message: "send to data base successfull" });
   } catch (error) {
-    res.status(501).json({ message: error.message });
+    next(error);
   }
 };
 
